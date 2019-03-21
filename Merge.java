@@ -4,15 +4,6 @@ public class Merge{
    public static int[] test1, test2, ary1, ary2;
 
    public static void mergesort(int[]data, int[]temp1, int[] temp2, int lo, int hi){
-     //Split data array into half?
-
-     // lo = 0;
-     // hi = data.length/2;
-     // temp = new int[hi];
-     // for (int i = 0; i < hi; i++){
-     //  temp[i] = data[i];
-     //  System.out.println(temp[i]);
-     // }
 
      //Starting position of first half: lo
      //Starting position of second half: (lo + hi / 2) + 1
@@ -33,7 +24,7 @@ public class Merge{
         temp1[i] = data[i];
       }
 
-      for (int j = middle + 1; j < right + 1; j++){
+      for (int j = middle + 1; j < temp2.length; j++){
         temp2[j] = data[j];
       }
 
@@ -52,7 +43,7 @@ public class Merge{
               data[k] = temp2[h2];
               h2++;
           }
-            k++;
+              k++;
         }
 
         while (h1 < (middle + 1)) {
@@ -69,16 +60,28 @@ public class Merge{
     }
 
   public static void mergesort(int[]data){
-    mergesort(data, ary1, ary2, 0, data.length-1);
+    int[] temp1,temp2;
+
+    if (lo < hi)
+       {
+           int m = (lo+hi)/2;
+
+           // Sort first and second halves
+           mergesort(data, temp1, temp2, lo, m-1);
+           mergesort(data, temp1, temp2, m, hi);
+
+           // Merge the sorted halves
+           mergesort(data, temp1, temp2, lo, hi);
+       }
   }
 
 
    public static void main(String[] args) {
      int[] test = new int[]{38, 27, 43, 3, 9, 82, 10};
-     mergesort(test, test1, test2, 0, 6);
+     mergesort(test);
 
-     for (int i = 0; i < test1.length; i++){
-       System.out.println(test1[i]);
+     for (int i = 0; i < test.length; i++){
+       System.out.println(test[i]);
      }
     //for (int j : test2){System.out.println(test2[j]);}
    }
