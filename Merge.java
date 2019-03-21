@@ -3,7 +3,6 @@ public class Merge{
    public static int lo, hi;
    public static int[] temp;
 
-
    public static void insertionSort(int[] data, int o, int c){
      int orig = o;
      int current = c;
@@ -25,11 +24,11 @@ public class Merge{
       return;
     }
 
-    int m = (lo + hi) / 2;
+    int m = (lo + hi + 1) / 2;
     int l = lo;
-    
-      mergesort(temp, data, lo, m-l+1); //merge sorts the left
-      mergesort(temp, data, hi-m, hi); //merge sorts the right
+
+      mergesort(temp, data, lo, m-1); //merge sorts the left
+      mergesort(temp, data, m, hi); //merge sorts the right
 
     for (int i = lo; i < hi + 1; i++){
       if (lo >= (l + hi + 1)/2 || m < hi + 1 && temp[lo] > temp[m]){ //if the middle is within the lower and upper bound,
@@ -45,6 +44,10 @@ public class Merge{
     }
 
   public static void mergesort(int[]data){
+    int[] temp = new int[data.length];
+    for (int i = 0; i < data.length; i++){
+      temp[i] = data[i];
+    }
     mergesort(data, temp, 0, data.length-1);
   }
 
