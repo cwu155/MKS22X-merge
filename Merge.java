@@ -1,78 +1,34 @@
 public class Merge{
 
    public static int lo, hi;
-   public static int[] test1, test2, ary1, ary2;
+   public static int[] temp;
 
-   public static void mergesort(int[]data, int[]temp1, int[] temp2, int lo, int hi){
+   public static void mergesort(int[]data, int[]temp, int lo, int hi){
 
-     //Starting position of first half: lo
-     //Starting position of second half: (lo + hi / 2) + 1
+     if (lo >= hi){
+      return;
+     }
 
-     int left = lo; //0
-     int middle = ((lo + hi) / 2); //3
-     int right = hi; //6 (data.length - 1)
 
-     // System.out.println(left);
-     // System.out.println(middle);
-     // System.out.println(right);
+    int m = (lo + hi + 1) / 2;
+      mergesort(data, temp, lo, m-1);
+      mergesort(data, temp, m, hi);
 
-     temp1 = new int[middle + 1]; //4 slots, 0, 1, 2, 3
-     temp2 = new int[right - middle]; //3 slots, 4, 5, 6
-
-     //Copy data to temp arrays, my testing for this code is wack
-      for (int i = 0; i < temp1.length; i++){
-        temp1[i] = data[i];
+    for (int i = lo; i < hi + 1; i++){
+      if(lo >= m || m < hi + 1 && temp[lo] > temp[m]){
+        data[i] = temp[m];
+        m++;
+      } else {
+        data[i] = temp[lo];
+        lo++;
       }
+    }
 
-      for (int j = middle + 1; j < temp2.length; j++){
-        temp2[j] = data[j];
-      }
-
-
-      //Merge merge merge??
-      int h1 = 0;
-      int h2 = 0;
-
-      int k = lo;
-        while (h1 < (middle + 1) && h2 < (right - middle)){
-
-          if (temp1[h1] <= temp2[h2]){
-              data[k] = temp1[h1];
-              h1++;
-          } else {
-              data[k] = temp2[h2];
-              h2++;
-          }
-              k++;
-        }
-
-        while (h1 < (middle + 1)) {
-            data[k] = temp1[h1];
-            h1++;
-            k++;
-        }
-
-        while (h2 < (right - middle)){
-            data[k] = temp2[h2];
-            h2++;
-            k++;
-        }
     }
 
   public static void mergesort(int[]data){
-    int[] temp1,temp2;
 
-    if (lo < hi)
-       {
-           int m = (lo+hi)/2;
-
-           // Sort first and second halves
-           mergesort(data, temp1, temp2, lo, m-1);
-           mergesort(data, temp1, temp2, m, hi);
-
-           // Merge the sorted halves
-           mergesort(data, temp1, temp2, lo, hi);
-       }
+    mergesort(data, temp, 0, data.length-1);
   }
 
 
